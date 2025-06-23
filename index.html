@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《三國演義》AI原生電影 - NFT收藏發行</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4af37;
+            --secondary: #8b0000;
+            --accent: #ff6b35;
+            --gold: #ffd700;
+            --red: #dc143c;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(26, 32, 44, 0.8);
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+        }
+        
+        .logo-font {
+            font-family: 'Noto Sans TC', serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--accent), var(--red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            100% { text-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 35px rgba(255, 107, 53, 0.4); }
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: -10px;
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--gold), var(--accent), var(--red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: 0.7s;
+        }
+        
+        .card:hover::before {
+            left: 100%;
+        }
+        
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            color: #000;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(135deg, #ffed4e, #ff8c42);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(10,10,10,0.6) 50%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            animation: bgPan 40s infinite linear;
+        }
+        
+        @keyframes bgPan {
+            0% { background-position: 0% 0%; transform: scale(1); }
+            25% { background-position: 100% 0%; transform: scale(1.05); }
+            50% { background-position: 100% 100%; transform: scale(1); }
+            75% { background-position: 0% 100%; transform: scale(1.05); }
+            100% { background-position: 0% 0%; transform: scale(1); }
+        }
+        
+        .floating {
+            animation: floating 8s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(1deg); }
+            50% { transform: translateY(-25px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1.2s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: particleFloat 8s infinite linear;
+            opacity: 0.6;
+            box-shadow: 0 0 6px var(--gold);
+        }
+        
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        .data-stream {
+            position: absolute;
+            height: 120px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold), var(--accent), transparent);
+            z-index: 0;
+            animation: dataStream 3s linear infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes dataStream {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            background: rgba(26, 32, 44, 0.9);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .stats-card .number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--gold), var(--accent), var(--red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .card:hover .project-img {
+            transform: scale(1.1);
+        }
+        
+        .placeholder-img {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #2a2a3e, #3a3a5e, #1a1a2e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--gold);
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .placeholder-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .token-badge {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            margin: 5% auto;
+            padding: 0;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            color: #000;
+            padding: 20px;
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close {
+            color: #000;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close:hover {
+            transform: scale(1.1);
+        }
+        
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+        
+        .nft-item {
+            background: rgba(26, 32, 44, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nft-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .nft-item.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .nft-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #2a2a3e, #3a3a5e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nft-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%);
+            animation: shimmer 3s infinite;
+        }
+        
+        .nft-info {
+            padding: 20px;
+        }
+        
+        .purchase-form {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 0 0 18px 18px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .input-field {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 25px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(26, 32, 44, 0.8));
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(15px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .logo-font { font-size: 1.8rem; }
+            .hero { min-height: 80vh; }
+            .section-title { font-size: 2rem; }
+            .modal-content { width: 95%; margin: 10% auto; }
+            .nft-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero { min-height: 70vh; }
+            .logo-font { font-size: 1.5rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子效果 -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- 數據流效果 -->
+    <div class="data-stream" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="data-stream" style="left: 35%; animation-delay: 1s;"></div>
+    <div class="data-stream" style="left: 55%; animation-delay: 2s;"></div>
+    <div class="data-stream" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="data-stream" style="left: 85%; animation-delay: 1.5s;"></div>
+
+    <!-- 導航欄 -->
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex flex-col items-center">
+                <div class="logo-font">《三國演義》AI原生電影</div>
+                <div class="logo-sub">EPIC AI FILM NFT</div>
+            </div>
+            <div class="hidden md:flex space-x-8 desktop-nav">
+                <a href="#nft" class="hover:text-yellow-400 transition-all duration-300 font-medium">NFT收藏</a>
+                <a href="#value" class="hover:text-yellow-400 transition-all duration-300 font-medium">項目價值</a>
+                <a href="#impact" class="hover:text-yellow-400 transition-all duration-300 font-medium">市場影響</a>
+                <a href="#advantages" class="hover:text-yellow-400 transition-all duration-300 font-medium">核心優勢</a>
+                <a href="#mint" class="hover:text-yellow-400 transition-all duration-300 font-medium">立即鑄造</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="btn-primary px-6 py-2 rounded-full text-sm font-bold">
+                    立即鑄造
+                </button>
+                
+                <button class="md:hidden text-white mobile-menu-btn text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 移動端選單 -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close absolute top-6 right-6 text-2xl cursor-pointer text-yellow-400">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <div class="mt-16 flex flex-col space-y-8">
+            <a href="#nft" class="text-xl hover:text-yellow-400 transition-all duration-300">NFT收藏</a>
+            <a href="#value" class="text-xl hover:text-yellow-400 transition-all duration-300">項目價值</a>
+            <a href="#impact" class="text-xl hover:text-yellow-400 transition-all duration-300">市場影響</a>
+            <a href="#advantages" class="text-xl hover:text-yellow-400 transition-all duration-300">核心優勢</a>
+            <a href="#mint" class="text-xl hover:text-yellow-400 transition-all duration-300">立即鑄造</a>
+            
+            <div class="pt-8 border-t border-gray-700">
+                <button class="btn-primary w-full py-4 rounded-lg font-bold text-lg">
+                    立即鑄造NFT
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要展示區 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-4 hero-content">
+            <div class="max-w-4xl animate-fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-8 gradient-text floating">
+                    《三國演義》AI原生電影
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                    世界首個AI原生古典史詩電影NFT收藏系列<br>
+                    <span class="text-yellow-400 font-semibold">600年文學經典與前沿科技的完美融合</span>
+                </p>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
+                    <a href="#nft" class="btn-primary px-10 py-4 rounded-full font-bold text-lg text-center">
+                        探索NFT收藏
+                    </a>
+                    <a href="#value" class="btn-secondary px-10 py-4 rounded-full font-bold text-lg text-center">
+                        了解項目價值
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="stats-card">
+                        <div class="number">21,000</div>
+                        <div class="text-sm text-gray-400">限量NFT</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="number">15億</div>
+                        <div class="text-sm text-gray-400">全球受眾</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="number">600年</div>
+                        <div class="text-sm text-gray-400">文化傳承</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="number">3大</div>
+                        <div class="text-sm text-gray-400">傳奇陣營</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NFT收藏系列 -->
+    <section id="nft" class="py-20" style="background: rgba(0, 0, 0, 0.8);">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="section-title center gradient-text">傳世NFT收藏系列</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    每一枚NFT都是獨一無二的數字文化瑰寶，承載著三國英雄的不朽傳奇與古典智慧的現代重生
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- 傳奇英雄系列 -->
+                <div class="card" onclick="openNFTModal('heroes')">
+                    <div class="relative">
+                        <div class="placeholder-img">
+                            <div class="text-6xl mb-2">⚔️</div>
+                            <div class="text-lg font-bold">傳奇英雄</div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="token-badge">傳奇英雄</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-xl text-yellow-400">傳奇英雄系列</h3>
+                            <div class="text-xl font-bold text-yellow-400">888 元</div>
+                        </div>
+                        <p class="text-gray-300 mb-4">AI生成的獨特三國英雄肖像，每個都擁有稀有特徵和陣營歸屬</p>
+                        <div class="text-sm text-gray-400 mb-4">
+                            <i class="fas fa-users mr-2"></i>發行數量：9,000枚
+                        </div>
+                        <button class="btn-primary w-full py-3 rounded-lg font-bold">查看詳情</button>
+                    </div>
+                </div>
+
+                <!-- 神兵寶器系列 -->
+                <div class="card" onclick="openNFTModal('weapons')">
+                    <div class="relative">
+                        <div class="placeholder-img">
+                            <div class="text-6xl mb-2">🗡️</div>
+                            <div class="text-lg font-bold">神兵寶器</div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="token-badge">神兵寶器</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-xl text-yellow-400">神兵寶器系列</h3>
+                            <div class="text-xl font-bold text-yellow-400">588 元</div>
+                        </div>
+                        <p class="text-gray-300 mb-4">經典神兵利器的數字重現，可與英雄NFT配對形成套裝效果</p>
+                        <div class="text-sm text-gray-400 mb-4">
+                            <i class="fas fa-users mr-2"></i>發行數量：6,000枚
+                        </div>
+                        <button class="btn-primary w-full py-3 rounded-lg font-bold">查看詳情</button>
+                    </div>
+                </div>
+
+                <!-- 至寶傳承系列 -->
+                <div class="card" onclick="openNFTModal('legacy')">
+                    <div class="relative">
+                        <div class="placeholder-img">
+                            <div class="text-6xl mb-2">🏆</div>
+                            <div class="text-lg font-bold">至寶傳承</div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="token-badge">至寶傳承</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-xl text-yellow-400">至寶傳承系列</h3>
+                            <div class="text-lg font-bold text-orange-400">合成獲得</div>
+                        </div>
+                        <p class="text-gray-300 mb-4">通過神兵合璧系統合成的稀有收藏品，展現英雄與神兵的完美結合</p>
+                        <div class="text-sm text-gray-400 mb-4">
+                            <i class="fas fa-puzzle-piece mr-2"></i>獲得方式：合成
+                        </div>
+                        <button class="btn-secondary w-full py-3 rounded-lg font-bold">了解合成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NFT詳情模態框 -->
+    <div id="nftModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="text-2xl font-bold">NFT詳情</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="modalBody">
+                <!-- 內容將由JavaScript動態生成 -->
+            </div>
+            <div class="purchase-form">
+                <h3 class="text-xl font-bold text-yellow-400 mb-4">購買資訊</h3>
+                <form id="purchaseForm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">購買數量</label>
+                            <input type="number" id="quantity" class="input-field" min="1" max="10" value="1">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">總價格</label>
+                            <input type="text" id="totalPrice" class="input-field" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">錢包地址</label>
+                        <input type="text" id="walletAddress" class="input-field" placeholder="請輸入您的錢包地址">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">電子郵件</label>
+                        <input type="email" id="email" class="input-field" placeholder="接收確認信息">
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="button" class="btn-primary flex-1 py-3 rounded-lg font-bold" onclick="connectWallet()">
+                            <i class="fas fa-wallet mr-2"></i>連接錢包
+                        </button>
+                        <button type="submit" class="btn-secondary flex-1 py-3 rounded-lg font-bold">
+                            <i class="fas fa-shopping-cart mr-2"></i>立即購買
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 項目核心價值 -->
+    <section id="value" class="py-20" style="background: rgba(0, 0, 0, 0.9);">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="section-title center gradient-text">項目核心價值</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    基於深厚文化底蘊與前沿科技的數字資產價值體系，開創史詩級收藏品的全新標準
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">🎬</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">全球首創</h3>
+                    <p class="text-gray-300 leading-relaxed">世界首個AI原生古典史詩電影NFT項目，開創全新賽道，具有強大的先發優勢和市場獨占性</p>
+                </div>
+                
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">📚</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">文化IP價值</h3>
+                    <p class="text-gray-300 leading-relaxed">基於600年傳世經典《三國演義》，擁有全球數億粉絲基礎，文化價值經過歷史驗證</p>
+                </div>
+                
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">🤖</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">AI技術革新</h3>
+                    <p class="text-gray-300 leading-relaxed">運用最前沿的AI生成技術，實現傳統影視無法達到的創作自由度和成本優勢</p>
+                </div>
+                
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">💎</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">稀缺性保障</h3>
+                    <p class="text-gray-300 leading-relaxed">限量發行21,000枚NFT，配合銷毀機制持續減少供應量，確保長期收藏價值</p>
+                </div>
+                
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">🌍</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">全球市場</h3>
+                    <p class="text-gray-300 leading-relaxed">多語言版本覆蓋180個國家，面向全球15億潛在用戶，市場空間巨大</p>
+                </div>
+                
+                <div class="card p-8 text-center">
+                    <div class="text-5xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">實用價值</h3>
+                    <p class="text-gray-300 leading-relaxed">觀影權限、治理投票、質押收益、社區特權等多重實用功能，超越純收藏價值</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 全球市場影響力 -->
+    <section id="impact" class="py-20" style="background: rgba(0, 0, 0, 0.95);">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="section-title center gradient-text">全球市場影響力</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    《三國演義》作為世界級文化IP的全球認知度和市場表現，為NFT收藏價值提供堅實基礎
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-16">
+                <div class="stats-card">
+                    <div class="number">90%</div>
+                    <div class="text-gray-400 font-medium">中國大陸認知度</div>
+                </div>
+                <div class="stats-card">
+                    <div class="number">60%</div>
+                    <div class="text-gray-400 font-medium">日本大眾認知度</div>
+                </div>
+                <div class="stats-card">
+                    <div class="number">700萬</div>
+                    <div class="text-gray-400 font-medium">日本漫畫銷量</div>
+                </div>
+                <div class="stats-card">
+                    <div class="number">900萬</div>
+                    <div class="text-gray-400 font-medium">遊戲系列銷量</div>
+                </div>
+                <div class="stats-card">
+                    <div class="number">40+</div>
+                    <div class="text-gray-400 font-medium">翻譯語言版本</div>
+                </div>
+                <div class="stats-card">
+                    <div class="number">200+</div>
+                    <div class="text-gray-400 font-medium">影視改編作品</div>
+                </div>
+            </div>
+
+            <!-- 市場前景分析 -->
+            <div class="max-w-5xl mx-auto">
+                <div class="card p-8">
+                    <h3 class="text-3xl font-bold text-center mb-8 gradient-text">市場前景與投資價值</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-yellow-400">短期價值（6-12個月）</h4>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-start"><i class="fas fa-rocket text-yellow-400 mr-3 mt-1"></i>全球首個AI原生古典史詩電影的先發優勢</li>
+                                <li class="flex items-start"><i class="fas fa-users text-yellow-400 mr-3 mt-1"></i>合理定價帶來的廣泛參與和快速售罄</li>
+                                <li class="flex items-start"><i class="fas fa-trophy text-yellow-400 mr-3 mt-1"></i>高質量內容帶來的品牌價值提升</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-yellow-400">長期價值（3-10年）</h4>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-start"><i class="fas fa-globe text-yellow-400 mr-3 mt-1"></i>完整三國數字文化宇宙的建成</li>
+                                <li class="flex items-start"><i class="fas fa-gamepad text-yellow-400 mr-3 mt-1"></i>與遊戲、教育、元宇宙的深度整合</li>
+                                <li class="flex items-start"><i class="fas fa-landmark text-yellow-400 mr-3 mt-1"></i>成為中華文化數字化傳播的標杆項目</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 競爭優勢對比 -->
+    <section id="advantages" class="py-20" style="background: rgba(0, 0, 0, 0.8);">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="section-title center gradient-text">競爭優勢對比</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    與傳統NFT項目和歷史IP項目的全方位對比分析，展現《三國演義》AI原生電影的獨特價值
+                </p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="card overflow-hidden">
+                    <div class="text-center py-6 bg-gradient-to-r from-yellow-600 to-red-600">
+                        <h3 class="text-2xl font-bold text-black">《三國演義》AI原生電影 vs 傳統NFT項目</h3>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-yellow-400/20">
+                                    <th class="p-6 text-left text-yellow-400 font-bold">對比維度</th>
+                                    <th class="p-6 text-center text-yellow-400 font-bold">《三國演義》AI原生電影</th>
+                                    <th class="p-6 text-center text-yellow-400 font-bold">傳統NFT項目</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-yellow-400/10">
+                                    <td class="p-6 font-medium">文化底蘊</td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-green-400 text-2xl">✓</span><br>
+                                        <span class="text-sm mt-2 block">600年經典文學IP</span>
+                                    </td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-red-400 text-2xl">✗</span><br>
+                                        <span class="text-sm mt-2 block">缺乏深厚文化根基</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-yellow-400/10">
+                                    <td class="p-6 font-medium">全球認知度</td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-green-400 text-2xl">✓</span><br>
+                                        <span class="text-sm mt-2 block">數億人熟知的經典</span>
+                                    </td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-red-400 text-2xl">✗</span><br>
+                                        <span class="text-sm mt-2 block">需要從零建立認知</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-yellow-400/10">
+                                    <td class="p-6 font-medium">實用價值</td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-green-400 text-2xl">✓</span><br>
+                                        <span class="text-sm mt-2 block">觀影+治理+社交多重功能</span>
+                                    </td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-red-400 text-2xl">✗</span><br>
+                                        <span class="text-sm mt-2 block">多數僅有收藏價值</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-yellow-400/10">
+                                    <td class="p-6 font-medium">技術創新</td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-green-400 text-2xl">✓</span><br>
+                                        <span class="text-sm mt-2 block">AI原生電影製作技術</span>
+                                    </td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-red-400 text-2xl">✗</span><br>
+                                        <span class="text-sm mt-2 block">傳統藝術創作方式</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-6 font-medium">持續內容</td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-green-400 text-2xl">✓</span><br>
+                                        <span class="text-sm mt-2 block">多季度電影持續產出</span>
+                                    </td>
+                                    <td class="p-6 text-center">
+                                        <span class="text-red-400 text-2xl">✗</span><br>
+                                        <span class="text-sm mt-2 block">缺乏內容更新機制</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 立即鑄造CTA -->
+    <section id="mint" class="py-20" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 0, 0, 0.1));">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8 gradient-text">
+                    加入《三國演義》數字傳奇
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+                    見證古典智慧與前沿科技的完美融合<br>
+                    <span class="text-yellow-400 font-semibold">收藏屬於你的三國傳奇NFT</span>
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">⚔️</div>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">選擇你的陣營</h3>
+                        <p class="text-gray-300">魏、蜀、吳三大陣營，每個都有獨特的英雄和故事</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🎬</div>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">享受專屬權益</h3>
+                        <p class="text-gray-300">永久觀影權、治理投票權、質押收益等多重價值</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">成為傳奇收藏家</h3>
+                        <p class="text-gray-300">參與史詩級文化IP的數字化傳承與價值創造</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button class="btn-primary px-12 py-4 rounded-full font-bold text-xl" onclick="openNFTModal('heroes')">
+                        立即鑄造NFT
+                    </button>
+                    <button class="btn-secondary px-12 py-4 rounded-full font-bold text-xl" onclick="scrollToSection('value')">
+                        了解更多詳情
+                    </button>
+                </div>
+                
+                <div class="mt-12 text-sm text-gray-400">
+                    <p>💎 限量發行 21,000 枚 | 🔥 當前階段：傳奇英雄系列 | ⏰ 鑄造即將開始</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 項目背景與團隊 -->
+    <section class="py-20" style="background: rgba(0, 0, 0, 0.95);">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title center gradient-text">項目背景</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    由經驗豐富的AI技術專家、影視製作人員和區塊鏈開發者組成的國際化團隊
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400">🎯 項目使命</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-scroll text-yellow-400 mr-3 mt-1"></i>
+                            <span>讓古典歷史文學通過AI技術跨越語言和文化鴻溝</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-cogs text-yellow-400 mr-3 mt-1"></i>
+                            <span>開創AI電影史詩劇集的製作新範式</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-handshake text-yellow-400 mr-3 mt-1"></i>
+                            <span>構建可持續的歷史IP生態系統</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-globe-asia text-yellow-400 mr-3 mt-1"></i>
+                            <span>向世界展示中華文化的智慧與魅力</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400">🏗️ 技術優勢</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-brain text-yellow-400 mr-3 mt-1"></i>
+                            <span>業界領先的AI視頻生成技術棧</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-shield-alt text-yellow-400 mr-3 mt-1"></i>
+                            <span>經過多輪審計的智能合約安全保障</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-language text-yellow-400 mr-3 mt-1"></i>
+                            <span>多語言AI配音與本土化適配</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-link text-yellow-400 mr-3 mt-1"></i>
+                            <span>跨鏈部署確保最大兼容性</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部訂閱 -->
+    <section class="py-16" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 0, 0, 0.2));">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 gradient-text">訂閱項目動態</h2>
+                <p class="text-xl text-gray-200 mb-8">
+                    第一時間獲取NFT發售信息、項目進展和獨家內容訪問權限
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" id="subscribeEmail" placeholder="輸入您的電子郵件地址" class="input-field rounded-full px-6 py-4 flex-1">
+                    <button id="subscribeBtn" class="btn-primary px-8 py-4 rounded-full font-bold">
+                        立即訂閱
+                    </button>
+                </div>
+                <p class="text-sm text-gray-400 mt-4">
+                    訂閱即可獲得白名單資格和早期鑄造權限
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部信息 -->
+    <footer class="footer py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex flex-col items-start mb-4">
+                        <div class="logo-font text-2xl">《三國演義》AI原生電影</div>
+                        <div class="logo-sub">EPIC AI FILM NFT</div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        通過AI和區塊鏈技術革命性地傳承中華古典文化
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                            <i class="fab fa-medium text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">平台</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#nft" class="text-gray-400 hover:text-yellow-400 transition-colors">NFT收藏</a></li>
+                        <li><a href="#value" class="text-gray-400 hover:text-yellow-400 transition-colors">項目價值</a></li>
+                        <li><a href="#impact" class="text-gray-400 hover:text-yellow-400 transition-colors">市場影響</a></li>
+                        <li><a href="#advantages" class="text-gray-400 hover:text-yellow-400 transition-colors">核心優勢</a></li>
+                        <li><a href="#mint" class="text-gray-400 hover:text-yellow-400 transition-colors">立即鑄造</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">資源</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">白皮書</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">技術文檔</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">代幣經濟</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">開發者</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">支持中心</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400">法律</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">服務條款</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">隱私政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">版權政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">合規聲明</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">聯繫我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 《三國演義》AI原生電影 NFT項目。保留所有權利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // NFT數據
+        const nftData = {
+            heroes: {
+                title: '傳奇英雄系列',
+                price: 888,
+                supply: 9000,
+                description: 'AI生成的獨特三國英雄肖像，每個都擁有稀有特徵和陣營歸屬',
+                items: [
+                    {
+                        id: 'hero_001',
+                        name: '劉備 - 仁德之君',
+                        emoji: '👑',
+                        rarity: '傳說',
+                        faction: '蜀漢',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '桃園結義的領袖，以仁德治國，擁有無與倫比的領導魅力。'
+                    },
+                    {
+                        id: 'hero_002',
+                        name: '關羽 - 武聖忠義',
+                        emoji: '⚔️',
+                        rarity: '史詩',
+                        faction: '蜀漢',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '義薄雲天的武聖，手持青龍偃月刀，忠義無雙。'
+                    },
+                    {
+                        id: 'hero_003',
+                        name: '張飛 - 猛將之勇',
+                        emoji: '🛡️',
+                        rarity: '史詩',
+                        faction: '蜀漢',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '勇猛無比的猛將，手持丈八蛇矛，威震敵膽。'
+                    },
+                    {
+                        id: 'hero_004',
+                        name: '諸葛亮 - 智慧化身',
+                        emoji: '🎭',
+                        rarity: '傳說',
+                        faction: '蜀漢',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '臥龍先生，運籌帷幄之中，決勝千里之外。'
+                    },
+                    {
+                        id: 'hero_005',
+                        name: '曹操 - 亂世奸雄',
+                        emoji: '👹',
+                        rarity: '傳說',
+                        faction: '曹魏',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '治世之能臣，亂世之奸雄，統一北方的霸主。'
+                    },
+                    {
+                        id: 'hero_006',
+                        name: '孫權 - 江東虎主',
+                        emoji: '🐅',
+                        rarity: '史詩',
+                        faction: '東吳',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '江東虎主，承父兄之業，建立東吳霸權。'
+                    },
+                    {
+                        id: 'hero_007',
+                        name: '趙雲 - 常山趙子龍',
+                        emoji: '🐉',
+                        rarity: '史詩',
+                        faction: '蜀漢',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '常山趙子龍，七進七出救阿斗，膽量過人。'
+                    },
+                    {
+                        id: 'hero_008',
+                        name: '呂布 - 飛將無雙',
+                        emoji: '🏹',
+                        rarity: '傳說',
+                        faction: '獨立',
+                        attributes: ['永久觀影權', 'DAO治理投票權', '質押獎勵收益', '專屬社區權限', 'AI互動對話'],
+                        description: '人中呂布，馬中赤兔，天下無雙的飛將軍。'
+                    }
+                ]
+            },
+            weapons: {
+                title: '神兵寶器系列',
+                price: 588,
+                supply: 6000,
+                description: '經典神兵利器的數字重現，可與英雄NFT配對形成套裝效果',
+                items: [
+                    {
+                        id: 'weapon_001',
+                        name: '青龍偃月刀',
+                        emoji: '🗡️',
+                        rarity: '傳說',
+                        owner: '關羽',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '關聖帝君的專屬神兵，重八十二斤，削鐵如泥。'
+                    },
+                    {
+                        id: 'weapon_002',
+                        name: '丈八蛇矛',
+                        emoji: '🔱',
+                        rarity: '史詩',
+                        owner: '張飛',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '燕人張翼德的神兵利器，長一丈八尺。'
+                    },
+                    {
+                        id: 'weapon_003',
+                        name: '倚天劍',
+                        emoji: '⚔️',
+                        rarity: '傳說',
+                        owner: '曹操',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '曹孟德的帝王之劍，削鐵如泥，鋒利無比。'
+                    },
+                    {
+                        id: 'weapon_004',
+                        name: '羽扇綸巾',
+                        emoji: '🪶',
+                        rarity: '史詩',
+                        owner: '諸葛亮',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '孔明先生的智慧象徵，羽扇綸巾，談笑間強虜灰飛煙滅。'
+                    },
+                    {
+                        id: 'weapon_005',
+                        name: '古錠刀',
+                        emoji: '🔪',
+                        rarity: '稀有',
+                        owner: '呂布',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '飛將呂布的無雙利刃，人中呂布，馬中赤兔。'
+                    },
+                    {
+                        id: 'weapon_006',
+                        name: '七星寶刀',
+                        emoji: '🗡️',
+                        rarity: '稀有',
+                        owner: '董卓',
+                        attributes: ['裝備加成效果', '套裝收藏價值', '合成系統材料', '交易增值潛力', '稀有度特徵'],
+                        description: '董太師的珍貴寶刀，刀身鑲嵌七顆寶石。'
+                    }
+                ]
+            },
+            legacy: {
+                title: '至寶傳承系列',
+                price: '合成獲得',
+                supply: '最多3000',
+                description: '通過神兵合璧系統合成的稀有收藏品，展現英雄與神兵的完美結合',
+                items: [
+                    {
+                        id: 'legacy_001',
+                        name: '劉關張桃園三結義',
+                        emoji: '🌸',
+                        rarity: '神話',
+                        synthesis: '劉備 + 關羽 + 張飛',
+                        attributes: ['最高收藏價值', '超級治理權限', '版稅分紅收益', '創作參與權', '專屬特權訪問'],
+                        description: '三人義結金蘭，不求同年同月同日生，但願同年同月同日死。'
+                    },
+                    {
+                        id: 'legacy_002',
+                        name: '諸葛亮空城計',
+                        emoji: '🏰',
+                        rarity: '神話',
+                        synthesis: '諸葛亮 + 羽扇綸巾',
+                        attributes: ['最高收藏價值', '超級治理權限', '版稅分紅收益', '創作參與權', '專屬特權訪問'],
+                        description: '孔明坐於城樓之上，焚香操琴，司馬懿疑而退兵。'
+                    },
+                    {
+                        id: 'legacy_003',
+                        name: '關羽過五關斬六將',
+                        emoji: '🛤️',
+                        rarity: '神話',
+                        synthesis: '關羽 + 青龍偃月刀',
+                        attributes: ['最高收藏價值', '超級治理權限', '版稅分紅收益', '創作參與權', '專屬特權訪問'],
+                        description: '雲長護嫂千里尋兄，過五關斬六將，義薄雲天。'
+                    }
+                ]
+            }
+        };
+
+        let selectedNFT = null;
+
+        // 粒子效果
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                    particles.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 12000);
+                }, i * 300);
+            }
+        }
+
+        // 開啟NFT模態框
+        function openNFTModal(type) {
+            const modal = document.getElementById('nftModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            const data = nftData[type];
+            modalTitle.textContent = data.title;
+            
+            modalBody.innerHTML = `
+                <div class="p-6">
+                    <div class="mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-yellow-400 mb-2">系列資訊</h3>
+                                <p class="text-gray-300 mb-4">${data.description}</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">鑄造價格:</span>
+                                        <span class="text-yellow-400 font-bold">${typeof data.price === 'number' ? data.price + ' 元' : data.price}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">發行數量:</span>
+                                        <span class="text-yellow-400 font-bold">${data.supply} 枚</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">稀有度:</span>
+                                        <span class="text-yellow-400 font-bold">多種等級</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-yellow-400 mb-2">核心權益</h3>
+                                <ul class="space-y-2 text-sm text-gray-300">
+                                    ${data.items[0].attributes.map(attr => 
+                                        `<li class="flex items-center">
+                                            <i class="fas fa-check text-yellow-400 mr-2"></i>
+                                            ${attr}
+                                        </li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">NFT列表</h3>
+                    <div class="nft-grid">
+                        ${data.items.map(item => `
+                            <div class="nft-item" onclick="selectNFT('${item.id}', '${item.name}', ${typeof data.price === 'number' ? data.price : 0})">
+                                <div class="nft-image">
+                                    <div class="text-5xl">${item.emoji}</div>
+                                </div>
+                                <div class="nft-info">
+                                    <h4 class="font-bold text-yellow-400 mb-2">${item.name}</h4>
+                                    <div class="text-sm text-gray-400 mb-2">
+                                        稀有度: <span class="text-yellow-400">${item.rarity}</span>
+                                        ${item.faction ? `| 陣營: <span class="text-yellow-400">${item.faction}</span>` : ''}
+                                        ${item.owner ? `| 持有者: <span class="text-yellow-400">${item.owner}</span>` : ''}
+                                        ${item.synthesis ? `| 合成: <span class="text-yellow-400">${item.synthesis}</span>` : ''}
+                                    </div>
+                                    <p class="text-sm text-gray-300 mb-3">${item.description}</p>
+                                    <div class="text-lg font-bold text-yellow-400">
+                                        ${typeof data.price === 'number' ? data.price + ' 元' : data.price}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // 更新購買表單
+            updatePurchaseForm(data.price, data.title);
+            
+            modal.style.display = 'block';
+        }
+
+        // 選擇NFT
+        function selectNFT(id, name, price) {
+            // 移除之前的選中狀態
+            document.querySelectorAll('.nft-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // 添加選中狀態
+            event.currentTarget.classList.add('selected');
+            
+            // 更新選中的NFT
+            selectedNFT = { id, name, price };
+            
+            // 更新購買表單
+            document.getElementById('modalTitle').textContent = name;
+            updatePurchaseForm(price, name);
+        }
+
+        // 更新購買表單
+        function updatePurchaseForm(price, title) {
+            const quantityInput = document.getElementById('quantity');
+            const totalPriceInput = document.getElementById('totalPrice');
+            
+            if (typeof price === 'number') {
+                const updateTotal = () => {
+                    const quantity = parseInt(quantityInput.value) || 1;
+                    const total = price * quantity;
+                    totalPriceInput.value = total + ' 元';
+                };
+                
+                quantityInput.addEventListener('input', updateTotal);
+                quantityInput.disabled = false;
+                updateTotal();
+            } else {
+                totalPriceInput.value = price;
+                quantityInput.disabled = true;
+            }
+        }
+
+        // 連接錢包
+        function connectWallet() {
+            // 模擬錢包連接
+            const wallets = ['MetaMask', 'WalletConnect', 'Coinbase Wallet', 'Trust Wallet'];
+            const selectedWallet = wallets[Math.floor(Math.random() * wallets.length)];
+            
+            alert(`正在連接錢包...\n\n檢測到可用錢包:\n${wallets.join('\n')}\n\n正在連接: ${selectedWallet}`);
+            
+            setTimeout(() => {
+                const walletAddress = '0x' + Math.random().toString(16).substring(2, 15) + Math.random().toString(16).substring(2, 15);
+                document.getElementById('walletAddress').value = walletAddress;
+                alert(`🎉 錢包連接成功！\n\n錢包類型: ${selectedWallet}\n錢包地址: ${walletAddress}`);
+            }, 2000);
+        }
+
+        // 滾動到指定區域
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // 關閉模態框
+        function closeModal() {
+            document.getElementById('nftModal').style.display = 'none';
+            selectedNFT = null;
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 創建粒子效果
+            createParticles();
+            setInterval(createParticles, 20000);
+            
+            // 模態框事件
+            const modal = document.getElementById('nftModal');
+            const closeBtn = modal.querySelector('.close');
+            
+            closeBtn.addEventListener('click', closeModal);
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // 購買表單提交
+            document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const quantity = document.getElementById('quantity').value;
+                const totalPrice = document.getElementById('totalPrice').value;
+                const walletAddress = document.getElementById('walletAddress').value;
+                const email = document.getElementById('email').value;
+                
+                if (!selectedNFT) {
+                    alert('請先選擇一個NFT！');
+                    return;
+                }
+                
+                if (!walletAddress) {
+                    alert('請先連接錢包！');
+                    return;
+                }
+                
+                if (!email) {
+                    alert('請輸入電子郵件地址！');
+                    return;
+                }
+                
+                // 顯示購買確認
+                const confirmMessage = `
+🛒 購買確認
+
+NFT名稱: ${selectedNFT.name}
+購買數量: ${quantity}
+總價格: ${totalPrice}
+錢包地址: ${walletAddress}
+聯繫郵箱: ${email}
+
+確認購買嗎？
+                `;
+                
+                if (confirm(confirmMessage)) {
+                    // 顯示處理中
+                    alert('⏳ 正在處理交易...\n\n請在錢包中確認交易\n預計處理時間: 1-3分鐘');
+                    
+                    setTimeout(() => {
+                        const txHash = '0x' + Math.random().toString(16).substring(2, 66);
+                        alert(`🎉 恭喜！NFT購買成功！
+
+✅ 交易已確認
+📄 交易哈希: ${txHash}
+🎯 NFT將在24小時內發送到您的錢包
+📧 確認郵件已發送到 ${email}
+
+感謝您加入《三國演義》AI原生電影NFT收藏！`);
+                        closeModal();
+                    }, 3000);
+                }
+            });
+            
+            // 移動端選單
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // 點擊選單項目後關閉移動端選單
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // 滾動動畫
+            const animatedElements = document.querySelectorAll('.animate-fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'scale(1)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'scale(0.9)';
+                observer.observe(el);
+            });
+            
+            // 平滑滾動
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // 訂閱表單
+            const subscribeBtn = document.getElementById('subscribeBtn');
+            const emailInput = document.getElementById('subscribeEmail');
+            
+            subscribeBtn.addEventListener('click', function() {
+                const email = emailInput.value.trim();
+                if (email && email.includes('@')) {
+                    alert(`🎉 訂閱成功！
+
+✅ 您已成功訂閱《三國演義》AI原生電影NFT項目動態
+📧 訂閱郵箱: ${email}
+
+🎁 福利待遇:
+• 白名單資格已自動添加
+• 早期鑄造權限已開啟
+• 獨家內容訪問權限已激活
+• 項目進展第一時間通知
+
+📬 確認郵件將在5分鐘內發送到您的郵箱`);
+                    emailInput.value = '';
+                } else {
+                    alert('❌ 請輸入有效的電子郵件地址！');
+                }
+            });
+
+            // 導航欄立即鑄造按鈕
+            document.querySelector('.navbar .btn-primary').addEventListener('click', function(e) {
+                e.preventDefault();
+                openNFTModal('heroes');
+            });
+        });
+    </script>
+</body>
+</html>
